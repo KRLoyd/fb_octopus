@@ -1,0 +1,209 @@
+<html>
+  <head>
+    <!--  Meta  -->
+    <meta charset="UTF-8" />
+    <title>TEAM OCTOPUS</title>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+      FB.init({
+      appId      : '176725239553173', // Set YOUR APP ID
+      channelUrl : 'http://hayageek.com/examples/oauth/facebook/oauth-javascript/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response)
+      {
+      if (response.status === 'connected')
+      {
+      document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+      //SUCCESS
+
+      }
+      else if (response.status === 'not_authorized')
+      {
+      document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
+
+      //FAILED
+      } else
+      {
+      document.getElementById("message").innerHTML +=  "<br>Logged Out";
+
+      //UNKNOWN ERROR
+      }
+      });
+
+      };
+
+      function Login()
+      {
+
+      FB.login(function(response) {
+      if (response.authResponse)
+      {
+      getUserInfo();
+      FB.getAuthResponse(response)
+      {
+      console.log("This is the auth response");
+      console.log(response);
+      }
+      
+      } else
+      {
+      console.log('User cancelled login or did not fully authorize.');
+      }
+      },{scope: 'user_likes'});
+
+      }
+
+      function getUserInfo() {
+      FB.api('/me', function(response) {
+
+      var str="<b>Name</b> : "+response.name+"<br>";
+      str +="<b>id: </b>"+response.id+"<br>";
+      str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
+      str +="<input type='button' value='Logout' onclick='Logout();'/>";
+      document.getElementById("status").innerHTML=str;
+
+      console.log(response);
+
+      let musicList = [];
+      FB.api('/' + response.id + '/music', function (response) {
+        console.log(response.data);
+        for (let i = 0; i < response.data.length; i++) {
+         	musicList.push(response.data[i].name);
+        }
+      console.log("musicList: ", musicList);
+			    });
+
+			    
+			    // calling iTunes API
+
+			    function (musicList) {
+
+			    //let artistList = process.argv[2]
+
+			    //will be loadedfrom file
+			    let savedArtistDict = {'Jack Johnson': 'http://is1.mzstatic.com/image/thumb/Music2/v4/a2/66/32/a2663205-663c-8301-eec7-57937c2d0878/source/100x100bb.jpg '}
+			    let userDict = {}
+
+			    for (let i = 0; i < musicList; i++){
+						successFunc(musicList[i])
+						}
+		}
+
+		//success function
+						function successFunc (artist) {
+						if (savedArtistDict.get[artist]) {
+						userDict[artist] = savedArtistDict.get[artist];
+						}
+						else {
+						artUrl = getArtwork(artist);
+						// save artUrl to userDict
+						userDict[artist] = artUrl;
+						// save artUrl to savedArtistDict
+						savedArtistDict[artist] = artUrl;
+						// save savedArtistDict json file
+						json.stringify(savedArtistDict)
+						console.log(savedArtistDict)
+						// return userDict
+						console.log(userDict);
+						return userDict;
+						}
+	}
+
+	// get the art work
+
+					function getArtwork (artist) {
+					searchParams = 'term=' + artist.replace(/' '/g, '+');
+					searchUrl = url + searchParams;
+
+					$.ajax({
+						url: searchUrl,
+						data: artist,
+						type: 'GET',
+						dataType: 'json',
+						contentType: 'application/json',
+						success: function (data) {
+						data = data.get("artworkUrl30")
+						artworkUrlList = data.split('/')
+						imgSize = artworkUrlList[-1]
+						imgSize = imgSize.replace('3', '10')
+						artworkUrl = artworkUrlList.join('/') + '/' + imgSize
+						//artworkUrl = '/'.join(arworkUrlList[:-1]) + '/' + imgSize
+						return artworkUrl
+						},
+						error: function (data) {
+						console.log(data);
+						}
+						});
+						}
+						
+						//end of iTunes API
+			    
+			    
+      });
+						}
+						
+      function getPhoto()
+      {
+      FB.api('/me/picture?type=normal', function(response) {
+
+      var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+      document.getElementById("status").innerHTML+=str;
+
+      });
+
+						}
+						
+      function Logout()
+      {
+      FB.logout(function(){document.location.reload();});
+      }
+
+      // Load the SDK asynchronously
+      (function(d){
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+      }(document));
+
+    </script>
+    <div align="center">
+
+      <div id="status">
+	<img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
+      </div>
+
+      <br/><br/><br/><br/><br/>
+
+      <div id="message">
+      </div>
+
+    </div>
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+      var sc_project=11453597;
+      var sc_invisible=1;
+      var sc_security="336bf4e2";
+      var scJsHost = (("https:" == document.location.protocol) ?
+      "https://secure." : "http://www.");
+      document.write("<sc"+"ript type='text/javascript' src='" +
+							      scJsHost+
+							      "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+				      href="http://statcounter.com/" target="_blank"><img
+											class="statcounter"
+											src="//c.statcounter.com/11453597/0/336bf4e2/1/" alt="Web
+																	      Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+  </body>
+  </html>
