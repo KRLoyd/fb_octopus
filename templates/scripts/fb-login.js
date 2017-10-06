@@ -36,24 +36,26 @@ function Login() {
     } else {
       console.log('User cancelled login or did not fully authorize.');
     }
-  },{scope: 'email,user_photos,user_videos, user_likes'});
+  },{scope: 'user_likes'});
 }
 
 function getUserInfo() {
   FB.api('/me', function(response) {
 
     var str="<b>Name</b> : "+response.name+"<br>";
-    str +="<b>Link: </b>"+response.link+"<br>";
     str +="<b>Username:</b> "+response.username+"<br>";
     str +="<b>id: </b>"+response.id+"<br>";
     str +="<b>Email:</b> "+response.email+"<br>";
     str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
     str +="<input type='button' value='Logout' onclick='Logout();'/>";
     document.getElementById("status").innerHTML=str;
-
+    FB.api('/' + response.id + '/music', function(response) {
+      console.log(response.data);
+    }
     console.log(response);
   });
 }
+
 function getPhoto() {
   FB.api('/me/picture?type=normal', function(response) {
 
