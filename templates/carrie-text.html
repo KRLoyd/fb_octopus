@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <title>TEAM OCTOPUS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS STYLES -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+      FB.init({
+      appId      : '176725239553173', // Set YOUR APP ID
+      channelUrl : 'http://hayageek.com/examples/oauth/facebook/oauth-javascript/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response)
+      {
+      if (response.status === 'connected')
+      {
+      document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+      //SUCCESS
+
+      }
+      else if (response.status === 'not_authorized')
+      {
+      document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
+
+      //FAILED
+      } else
+      {
+      document.getElementById("message").innerHTML +=  "<br>Logged Out";
+
+      //UNKNOWN ERROR
+      }
+      });
+
+      };
+
+      function Login()
+      {
+
+      FB.login(function(response) {
+      if (response.authResponse)
+      {
+      getUserInfo();
+      FB.getAuthResponse(response)
+      {
+      console.log("This is the auth response");
+      console.log(response);
+      accessToken = response.accessToken;
+      userId = response.userID;
+      }
+
+      } else
+      {
+      console.log('User cancelled login or did not fully authorize.');
+      }
+      },{scope: 'user_likes'});
+
+      }
+     function getUserInfo() {
+      FB.api('/me', function(response) {
+
+      var str="<b>Name</b> : "+response.name+"<br>";
+      str +="<b>id: </b>"+response.id+"<br>";
+      str +="<input type='button' value='Logout' onclick='Logout();'/>";
+      document.getElementById("status").innerHTML=str;
+
+      console.log(response);
+
+      FB.api('/' + response.id + '/music', function (response) {
+      console.log(response.data);
+      });
+      });
+      }
+      function getPhoto()
+      {
+      FB.api('/me/picture?type=normal', function(response) {
+
+      var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+      document.getElementById("status").innerHTML+=str;
+
+      });
+
+      }
+      function Logout()
+      {
+      FB.logout(function(){document.location.reload();});
+      }
+
+      // Load the SDK asynchronously
+      (function(d){
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+      }(document));
+
+    </script>
+    <div align="center">
+
+      <div id="status">
+        <img src="http://hayageek.com/examples/oauth/facebook/oauth-javascript/LoginWithFacebook.png" style="cursor:pointer;" onclick="Login()"/>
+      </div>
+
+      <br/><br/><br/><br/><br/>
+
+      <div id="message">
+      </div>
+
+    </div>
+
+<!-- BODY -->
+
+  <div class="container">
+    <div id="page-wrap">
+      <div id="header">
+        <div class="container-responsive">
+          <nav class="navbar navbar-inverse navbar-responsive" role="navigation">
+            <a class="navthumb"><img class="img-responsive" src="images/logo-octo.png" alt="Mountain View";></a>
+            <a class="navbar navbar-brand" href="#">Octopus Media</a>
+            <div class="navbar navbar-right navbar-collapse">
+              <a class="navbar-brand" href="#About">About</a>
+              <a class="navbar-brand" href="#News">News</a>
+              <a class="navbar-brand" href="#Contact">Contact</a>
+            </div>
+        </div>
+      </div>
+  </nav>
+
+      <div class="jumbotron vertical-center" id="About">
+
+  <h1>OCTOPUS MEDIA</h1>
+
+  <img class="img-responsive" src="images/octopus.png" alt="">
+
+  <br></br>
+  <p>Autonomously;</p>
+  <p>Showing YOUR Media</p>
+  <p>One tentacle at a time.</p>
+
+ </div>
+
+  <div class="jumbotron" id="News">
+    <h1>News & Updates</h1>
+    <div class="update_box">
+    </div>
+  </div>
+
+  <div class="jumbotron" id="Contact">
+    <h1>Contact</h1>
+    <br>
+    <a class="btn btn-inline btn-github" href="https://github.com/edoc20" target="_blank">
+      <span class="fa fa-github"></span> Github
+    </a>
+    <a class="btn btn-inline  btn-linkedin" href="www.linkedin.com/in/christopher-novelli" target="_blank">
+      <span class="fa fa-linkedin"></span> Linkedin
+    </a>
+    <a class="btn  btn-primary btn-inline btn-free-code-camp" id="freecodecamp" href="https://www.freecodecamp.com/edoc20" target="_blank">
+      <span class="fa fa-free-code-camp"></span> Free Code Camp
+    </a>
+    <a class="btn  btn-inline btn-google" href="https://plus.google.com/u/0/117225043018748825795" target="_blank">
+      <span class="fa fa-google"></span> Google
+    </a>
+  </div>
+
+  <div id="footer">
+    <p style="text-align: center; font-size: 16px;">Written and Coded By
+      <a href="https://www.facebook.com/Octopus-Media-Center-1465556723538448/" target="_blank">Team Octopus</a></p>
+
+  </div>
+</div>
+
+<!-- END BODY -->
+
+    <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+      var sc_project=11453597;
+      var sc_invisible=1;
+      var sc_security="336bf4e2";
+      var scJsHost = (("https:" == document.location.protocol) ?
+      "https://secure." : "http://www.");
+      document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+
+							      "statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics" href="http://statcounter.com/" target="_blank"><img class="statcounter" src="//c.statcounter.com/11453597/0/336bf4e2/1/" alt="Web Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+  </body>
+  </html>
