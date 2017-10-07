@@ -82,21 +82,47 @@ rel='stylesheet' type='text/css'>
 
       console.log(response);
 
-      let musicList = [];
-      FB.api('/' + response.id + '/music', function (response) {
-      console.log(response.data);
-      let artists = $('#artist');
-        for (let i = 0; i < response.data.length; i++) {
-                            musicList.push(response.data[i].name);
-                            }
-                                    for (let i = 0; i < musicList.length; i++) {
+//      let musicList = [];
+//      FB.api('/' + response.id + '/music', function (response) {
+//      console.log(response.data);
+//      let artists = $('#artist');
+//        for (let i = 0; i < response.data.length; i++) {
+//                            musicList.push(response.data[i].name);
+//                           }
+//                                    for (let i = 0; i < musicList.length; i++) {
           let html = '<div class="col-lg-3 col-md-4 col-xs-6 thumb"><a class="thumbnail" href\
 ="#"><img class="img-responsive" src="images/octo_thumb_360.jpg" alt="No image found"></img><\
 /a><h2>' + musicList[i] + '</h2></div>';
-                            artists.append(html);
-                            }
+//                            artists.append(html);
+  //                          }
 
-	});
+                              const musicList = ['Jack Johnson', 'Norah Jones', 'Eminem', 'Qu\
+een', 'Sia', 'Sam Smith'];
+                              const albumList =['http://is1.mzstatic.com/image/thumb/Music2/v\
+4/a2/66/32/a2663205-663c-8301-eec7-57937c2d0878/source/100x100bb.jpg', 'http://is4.mzstatic.c\
+om/image/thumb/Music6/v4/42/a7/97/42a7977e-895c-0bca-d8c5-72c436a98f5a/source/100x100bb.jpg' \
+, 'http://is5.mzstatic.com/image/thumb/Music/v4/54/4b/00/544b0075-6ef9-5fb6-8040-0bcd9f0d5766\
+/source/100x100bb.jpg', 'http://is3.mzstatic.com/image/thumb/Music1/v4/94/92/a3/9492a374-e6e3\
+-8e92-0630-a5761070b0f7/source/100x100bb.jpg', 'http://is4.mzstatic.com/image/thumb/Music4/v4\
+/69/48/2e/69482ef7-3554-174e-73da-3fab18d55889/source/100x100bb.jpg', 'http://is5.mzstatic.co\
+m/image/thumb/Music/v4/b3/0a/e8/b30ae84e-10b5-f4d2-3d00-e4e279775f74/source/100x100bb.jpg' ]
+                              for (let i = 0; i < musicList.length; i++) {
+
+                              const musicSection = $('#artist');
+                              console.log(musicSection.text());
+
+                              let html = '';
+
+                              html += '<div class="col-lg-3 col-md-4 col-xs-6 thumb">' +
+                              '<a class="thumbnail" href="#">' +
+                              '<img class="img-responsive" src=' + albumList[i] + ' alt="Gene\
+ric placeholder thumbnail"></img></a>' + musicList[i] + '</div>'
+
+                              // html += musicList[i];
+
+                              musicSection.append(html);
+                              //   musicSection.insertAfter(musicList[i]);
+                               }
       });
 
       }
